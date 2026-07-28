@@ -1,6 +1,7 @@
 import { CONTACTS } from '../constants'
 import { MdWhatsapp } from 'react-icons/md'
 import { FaTelegram } from 'react-icons/fa'
+import authorPhoto from '../assets/photos/author.jpg'
 
 const Author = () => {
   const services = [
@@ -19,7 +20,7 @@ const Author = () => {
             <div className="relative">
               <div className="w-64 h-64 md:w-80 md:h-80 rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-primary to-primary-light">
                 <img
-                  src="/src/assets/photos/author.jpg"
+                  src={authorPhoto}
                   alt="Разработчик сайта"
                   className="w-full h-full object-cover"
                 />

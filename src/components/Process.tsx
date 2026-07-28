@@ -1,4 +1,8 @@
+import { useScrollReveal } from '../hooks/useScrollReveal'
+
 const Process = () => {
+  const { ref, isVisible } = useScrollReveal<HTMLDivElement>()
+
   const steps = [
     {
       num: 1,
@@ -33,9 +37,9 @@ const Process = () => {
   ]
 
   return (
-    <section id="process" className="py-20 md:py-28 bg-white">
+    <section id="process" className="py-20 md:py-28 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
-        <div className="text-center mb-16">
+        <div className={`text-center mb-16 reveal ${isVisible ? 'reveal-visible' : ''}`} ref={ref}>
           <span className="text-accent font-bold text-sm tracking-widest uppercase">
             Как мы работаем
           </span>
@@ -45,13 +49,15 @@ const Process = () => {
         </div>
 
         <div className="relative">
-          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-accent via-primary to-accent -translate-y-1/2 rounded-full" />
+          {/* Линия таймлайна */}
+          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-accent via-primary to-accent -translate-y-1/2 rounded-full origin-left scale-x-0" style={{ transform: isVisible ? 'translateY(-50%) scaleX(1)' : 'translateY(-50%) scaleX(0)', transition: 'transform 1.2s ease-out 0.3s' }} />
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-4">
             {steps.map((step, index) => (
               <div
                 key={index}
-                className="relative bg-white border-2 border-slate-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 group"
+                className={`relative bg-white border-2 border-slate-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 group reveal ${isVisible ? 'reveal-visible' : ''}`}
+                style={{ transitionDelay: `${index * 150}ms` }}
               >
                 <div className="relative aspect-video overflow-hidden">
                   <img
@@ -59,7 +65,7 @@ const Process = () => {
                     alt={step.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute top-4 left-4 w-12 h-12 rounded-full bg-accent text-primary font-extrabold text-xl flex items-center justify-center shadow-lg">
+                  <div className="absolute top-4 left-4 w-12 h-12 rounded-full bg-accent text-primary font-extrabold text-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                     {step.num}
                   </div>
                 </div>
