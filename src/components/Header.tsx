@@ -1,14 +1,24 @@
+import { useState, useEffect } from 'react'
 import { CONTACTS } from '../constants'
 import { MdWhatsapp } from 'react-icons/md'
 import { FaTelegram } from 'react-icons/fa'
 
 const Header = () => {
+  const [scrollY, setScrollY] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
     <header className="relative min-h-screen flex flex-col overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage: `url('https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=industrial%20fiberglass%20tank%20repair%20worker%20with%20protective%20gloves%20applying%20epoxy%20resin%20composite%20material%20close%20up%20professional%20industrial%20photography&image_size=landscape_16_9')`,
+          transform: `translateY(${scrollY * 0.4}px) scale(1.1)`,
         }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/80 to-primary-dark/90" />
@@ -45,7 +55,7 @@ const Header = () => {
         <div className="max-w-4xl animate-fade-in-up">
           <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 uppercase">
             Ремонт емкостей из стеклопластика
-            <span className="block text-accent text-2xl md:text-3xl lg:text-4xl font-bold mt-4 normal-case">
+            <span className="block shimmer-text text-2xl md:text-3xl lg:text-4xl font-bold mt-4 normal-case">
               Восстановление герметичности, прочности и ресурса оборудования
             </span>
           </h1>
@@ -60,7 +70,7 @@ const Header = () => {
               href={CONTACTS.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-accent hover:bg-accent-hover text-primary font-bold px-8 py-4 rounded-xl text-lg transition-all hover:scale-105 text-center shadow-lg shadow-accent/30 flex items-center justify-center gap-2"
+              className="bg-accent hover:bg-accent-hover text-primary font-bold px-8 py-4 rounded-xl text-lg transition-all hover:scale-105 text-center shadow-lg shadow-accent/30 flex items-center justify-center gap-2 animate-pulse-glow"
             >
               <MdWhatsapp size={28} />
               НАПИСАТЬ В WHATSAPP
